@@ -2,100 +2,101 @@ package io.agora.openvcall.location.Bluetooth;
 
 /**
  * Created by enzop on 25/05/2017.
+ * edited by Yuyang on 26/02/2018, replace this Collector use Android_Beacon_Library to improve the effective
  */
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.le.BluetoothLeScanner;
-import android.bluetooth.le.ScanCallback;
-import android.bluetooth.le.ScanResult;
+import android.content.Context;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Handler;
+import android.os.RemoteException;
 import android.util.Log;
 
-import java.util.ArrayList;
-import java.util.List;
+import org.altbeacon.beacon.Beacon;
+import org.altbeacon.beacon.BeaconConsumer;
+import org.altbeacon.beacon.BeaconManager;
+import org.altbeacon.beacon.BeaconParser;
+import org.altbeacon.beacon.Identifier;
+import org.altbeacon.beacon.RangeNotifier;
+import org.altbeacon.beacon.Region;
 
-import io.agora.openvcall.location.Bluetooth.IBeacon;
-import io.agora.openvcall.location.Bluetooth.IBeaconCallback;
-import io.agora.openvcall.location.Bluetooth.HexBytesConversor;
-public class IBeaconsCollector {
+import java.util.Collection;
+import java.util.HashMap;
+
+public class IBeaconsCollector  implements BeaconConsumer {
     // CONSTANTS
-    private static final long SCAN_PERIOD = 8000;
-    //private final String UUID_FILTER = "A0DF207C-142F-4A39-A457-6FC44D524C04";
-    private final String UUID_FILTER = "FDA50693-A4E2-4FB1-AFCF-C6EB07647825";
+    public static final String IBEACON_FORMAT = "m:2-3=0215,i:4-19,i:20-21,i:22-23,p:24-24";
+    private final static String targetUUID = "fda50693-a4e2-4fb1-afcf-c6eb07647825",gateUUID="A0DF207C-142F-4A39-A457-6FC44D524C04";    //uuid for iBeacons and GateWay Devices
+    private BeaconManager beaconManager;
+    private Context context;
+    private HashMap<Long, IBeacon> beaconMap;                                                                                           //use hash map to support average calculation
+    private Handler handler;
+    private final static String debugTag="BeaconScanner:";
+    private IBeaconCallback callback;
+    private static final long SCAN_PERIOD = 8000;                                                                                       //searching time
 
-    // VARIABLES
-    private BluetoothAdapter btAdapter;
-    private IBeaconCallback cb;
-    private final BluetoothLeScanner bts;
-    private Handler mHandler;
-    private List<IBeacon> collectedIBeacons = new ArrayList<>();
-    private boolean filledList = false;
+    public IBeaconsCollector(Context context){
+        this.context = context;
+        beaconManager = BeaconManager.getInstanceForApplication(context);
+        beaconManager.getBeaconParsers().add(new BeaconParser().setBeaconLayout(IBEACON_FORMAT));
+        beaconMap = new HashMap<>();
+        handler=new Handler();
+        callback = (IBeaconCallback)context;
+    }
+    public void onBeaconServiceConnect() {                                                                                              //callback function, called when bind this object to a searching service
+        beaconManager.removeAllRangeNotifiers();                                                                                        //remove all exists searching task before start new searching
 
-    // CONSTRUCTOR
-    public IBeaconsCollector(IBeaconCallback cb, BluetoothAdapter btAdapter) {
-        this.btAdapter = btAdapter;
-        this.bts = btAdapter.getBluetoothLeScanner();
-        mHandler = new Handler();
-        this.cb = cb;
+        beaconManager.addRangeNotifier(new RangeNotifier() {
+            @Override
+            public void didRangeBeaconsInRegion(Collection<Beacon> beacons, Region region) {
+                if(beacons.size()>0){
+                    for(Beacon x:beacons){                                                                                              //use iterator to access all beacons that be searched
+                        Log.d(debugTag,String.format("[%d]uuid:%s\tmajor:%s\\manner:%s\\distance:%.2f<rssi:%d>\n",beacons.size(),x.getId1(),x.getId2(),x.getId3(),x.getDistance(),x.getRssi()));
+                        long key = IBeacon.getKey(x.getId2().toInt(),x.getId3().toInt());
+                        IBeacon record = beaconMap.get(key);
+                        if(record==null){                                                                                               //if a beacon was first founded, add it to the map
+                            beaconMap.put(key,new IBeacon(x.getRssi(),x.getId2().toInt(),x.getId3().toInt(),x.getId1().toString()));
+                        }else{
+                            record.add(x.getRssi());                                                                                    //or update the record of a exists beacon
+                        }
+
+                    }
+                }else
+                    Log.d(debugTag,"-----no detected-----");
+            }
+        });
+
+        try{
+            beaconManager.startRangingBeaconsInRegion(new Region(targetUUID, Identifier.parse(targetUUID), null, null));    //start looking for iBeacons
+            beaconManager.startRangingBeaconsInRegion(new Region(gateUUID,Identifier.parse(gateUUID),null,null));           //start looking for gateWay
+        }catch (RemoteException e){
+            e.printStackTrace();
+        }
     }
 
-    // CALLBACK MESSAGE
-    public void findIBeacons(){
-
-        mHandler.postDelayed(new Runnable() {
+    public void findIBeacons(){                                                                                                     //start looking for the beacons
+        handler.postDelayed(new Runnable() {
             @Override
             public void run() {
-                bts.stopScan(leScanCallback);
-                cb.scanFinished(collectedIBeacons);
+                beaconManager.unbind(IBeaconsCollector.this);                                                            //stop searching by unbind scanner after a time
+                callback.scanFinished(beaconMap.values());
             }
-        }, SCAN_PERIOD);
-
-        bts.startScan(leScanCallback);
+        },SCAN_PERIOD);
+        beaconManager.bind(IBeaconsCollector.this);                                                                      //start searching by bind this scanner to service
     }
 
-    private ScanCallback leScanCallback = new ScanCallback() {
-        @Override
-        public void onScanResult(int callbackType, ScanResult result) {
-            super.onScanResult(callbackType, result);
-            IBeacon ibeacon = parseScanInfo(result);
-            if(ibeacon.getUuid().equals(UUID_FILTER))
-                collectedIBeacons.add(ibeacon);
-        }
-    };
 
-
-    // HELPERS
-    // Method for parsing each iBeacon detected by the scan callback
-    private IBeacon parseScanInfo(ScanResult result){
-        // Convert scan result to bytes stream
-        byte[] scanRecord = result.getScanRecord().getBytes();
-
-        // Obtaining Major value
-        int major = (scanRecord[25] & 0xff) * 0x100 + (scanRecord[26] & 0xff);
-        // Obtaining Minor value
-        int minor = (scanRecord[27] & 0xff) * 0x100 + (scanRecord[28] & 0xff);
-
-        //Convert UUID to hex String
-        byte[] uuidBytes = new byte[16];
-        System.arraycopy(scanRecord, 9, uuidBytes, 0, 16);
-        String hexString = HexBytesConversor.bytesToHex(uuidBytes);
-
-        // Translating Bytes to HEX for UUID
-        String uuid =  hexString.substring(0,8) + "-" +
-                hexString.substring(8,12) + "-" +
-                hexString.substring(12,16) + "-" +
-                hexString.substring(16,20) + "-" +
-                hexString.substring(20,32);
-
-        return new IBeacon(result.getRssi(), major, minor, uuid);
+    @Override
+    public Context getApplicationContext() {
+        return context;
     }
 
-    /* GETTERS AND SETTERS */
-
-    public List<IBeacon> getCollectedIBeacons() {
-        return collectedIBeacons;
+    @Override
+    public void unbindService(ServiceConnection serviceConnection) {
+        context.unbindService(serviceConnection);                                                                                   //callback function, just use context of the caller activity to bind and unbind service
     }
 
-    public void setCollectedIBeacons(List<IBeacon> collectedIBeacons) {
-        this.collectedIBeacons = collectedIBeacons;
+    @Override
+    public boolean bindService(Intent intent, ServiceConnection serviceConnection, int i) {
+        return context.bindService(intent,serviceConnection,i);
     }
 }

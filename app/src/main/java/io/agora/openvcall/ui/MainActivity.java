@@ -38,6 +38,7 @@ import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import io.agora.openvcall.R;
@@ -86,6 +87,7 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
         httptx=new HttpTx();
         button = (Button) findViewById(R.id.button_join);
         button.setOnTouchListener(new View.OnTouchListener() {
+            @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (event.getAction() == MotionEvent.ACTION_DOWN) {
                     // Pressed
@@ -183,14 +185,7 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
     /*public void onClickJoin(View view) {
         forwardToRoom();
     }*/
-    public void onClickJoin(View view) {
-        button=(Button)findViewById(R.id.button_join);
 
-        button.setClickable(false);
-        //forwardToRoom("test");
-        //collectBeacon();
-        findChannelWithGPS();
-    }
     //add String Channel
     public void forwardToRoom(String channel,String sessionID) {
         //EditText v_channel = (EditText) findViewById(R.id.channel_name);
@@ -211,6 +206,8 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
         startActivity(i);
     }
     public void findChannelWithGPS(){
+        //
+        //collectBeacon();
         final String[] channel = {""};
         final String[] sessionID = {""};
         final double latitude;
@@ -222,6 +219,7 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
             //logText.setText(""+latitude);
+            collectBeacon();
             String url ="https://www.911webrtc.com/api/android/getChannelGPS?latitude="+latitude+"&longitude="+longitude;
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
@@ -281,81 +279,52 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
         // 2. Collect info from iBeacons
-        IBeaconsCollector bc = new IBeaconsCollector(MainActivity.this, mBluetoothAdapter);
+        IBeaconsCollector bc = new IBeaconsCollector(MainActivity.this);
         bc.findIBeacons();
     }
     @Override
-    public void scanFinished(List<IBeacon> list) {
-        collectedIBeacons = list;
+    public void scanFinished(Collection<IBeacon> list)  {
         //logText.append("*FINISHED - iBeacons Scanned: "+ list.size() + "\n");
 
         // 3. Send HTTP request to Location Server
-        if(collectedIBeacons.size() > 0){
+        if(list.size() > 0){
             // 4. Create JSON object with the iBeacons
-            for (int i = 0; i < list.size(); i++) {
-                //for(IBeacon iBeacon : list){
-
-                /*logText.append("UUID: " + list.get(i).getUuid() + " - Major: " + list.get(i).getMajor()
-                        + " - Minor: " + list.get(i).getMinor() + " - RSSI: " + list.get(i).getRssi() + "\n");*/
-                if (i == 0) {
-                    //4.1 We first create the json object
-                    json = new Json(list.get(i).getUuid(), list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    try {
-                        json.createMyJsonIndoor();
-                        Log.i("CALL", "This is the 1st created JSON: " + json.readMyJson());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            json = new Json();
+            for (IBeacon x:list){
+                try {
+                    json.updateMyJsonIndoor(x.getMajor(),x.getMinor(),x.getRssi());
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else if(i==list.size()-1){
-                    //4.3 We add the last iBeacons to our json object and then we send it to the server
-                    try {
-                        json.updateMyJsonIndoor(list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        RequestQueue queue = Volley.newRequestQueue(this);
-                       // String urlfinal = "http://nead.bramsoft.com/indexupdate.php?test=true&json="+json.readMyJson();
-                        String urlfinal = "http://smith-system-f.herokuapp.com/indoorLocation/getIndoorLocation?test=true&json="+json.readMyJson();
-
-                        Log.i("[NG911 HTTP Get val] ", urlfinal);
-                        // Request a string response from the provided URL.
-                        StringRequest stringRequest = new StringRequest(Request.Method.GET, urlfinal,
-                                new Response.Listener<String>() {
-                                    @Override
-                                    public void onResponse(String response) {
-                                        Log.i("[XML received] ", response);
-                                        //looking for county balise
-
-
-                                        //logText.setText(response);
-                                        //findChannelWithBluetooth(response);
-
-                                    }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-                                //logLat.setText("That didn't work!");
-                            }
-                        });
-                        // Add the request to the RequestQueue.
-                        queue.add(stringRequest);
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //4.2 We add all the iBeacons to our json object
-                    try {
-                        json.updateMyJsonIndoor(list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-
             }
+            RequestQueue queue = Volley.newRequestQueue(this);
+            try {
+                String urlfinal = "http://smith-system-f.herokuapp.com/indoorLocation/getIndoorLocation?test=true&json="+json.readMyJson();
+                Log.i("[NG911 HTTP Get val] ", urlfinal);
+                StringRequest stringRequest = new StringRequest(Request.Method.GET, urlfinal,
+                        new Response.Listener<String>() {
+                            @Override
+                            public void onResponse(String response) {
+                                Log.i("[XML received] ", response);
+                                //looking for county balise
+
+
+                                //logText.setText(response);
+                                //findChannelWithBluetooth(response);
+
+                            }
+                        }, new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        //logLat.setText("That didn't work!");
+                    }
+                });
+                // Add the request to the RequestQueue.
+                queue.add(stringRequest);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             // TODO Send information to location server. SYNCHRONOUS METHOD
         }else{
             findChannelWithGPS();

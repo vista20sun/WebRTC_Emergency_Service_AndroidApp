@@ -18,47 +18,38 @@ public class Json {
      * @param Rssi
      * @return
      */
-    String Uuid;
-    String Major;
-    String Minor;
-    String Rssi;
-    JSONObject jsonOb;
-    JSONObject jsonObOutdoor;
+
+    /**
+     * remove redundancy variables and methods
+     */
+    //JSONObject jsonObOutdoor;
     JSONArray beaconsJson;
-    JSONObject main;
+    //JSONObject main;
 
-    public Json(String Uuid, String Major, String Minor, String Rssi){
-        this.Uuid=Uuid;
-        this.Major=Major;
-        this.Minor=Minor;
-        this.Rssi=Rssi;
-        jsonOb = new JSONObject();
-        jsonObOutdoor = new JSONObject();
-        beaconsJson = new JSONArray();
-        main=new JSONObject();
-    }
-
+    //private boolean inited;
     public Json() {
-        jsonOb = new JSONObject();
-        jsonObOutdoor = new JSONObject();
+        //jsonOb = new JSONObject();
+        //jsonObOutdoor = new JSONObject();
         beaconsJson = new JSONArray();
-        main=new JSONObject();
+        //main=new JSONObject();
+        //inited =false;
     }
 
-    public void createMyJsonIndoor() throws JSONException {
-        jsonOb.put("Major", Integer.parseInt(Major));
-        jsonOb.put("Minor", Integer.parseInt(Minor));
-        jsonOb.put("Rssi", Integer.parseInt(Rssi));
+/*    private void createMyJsonIndoor(int major, int minor,int rssi) throws JSONException {
+        jsonOb.put("Major", major);
+        jsonOb.put("Minor", minor);
+        jsonOb.put("Rssi", rssi);
         beaconsJson.put(jsonOb);
+        //inited = true;
         //main.put("location",beaconsJson);
-    }
+    }*/
     public void updateMyJsonIndoor( String Major, String Minor, String Rssi) throws JSONException {
         JSONObject json = new JSONObject();
         json.put("Major", Integer.parseInt(Major));
         json.put("Minor", Integer.parseInt(Minor));
         json.put("Rssi", Integer.parseInt(Rssi));
         beaconsJson.put(json);
-        //main.put("location",beaconsJson);//
+        //main.put("location",beaconsJson);
     }
 
     public void createMyJsonOutdoor(Context c) throws JSONException {
@@ -72,8 +63,6 @@ public class Json {
     public String readMyJson()throws JSONException {
         //fjrois
         Log.i("readMyJson JsonCLASS",beaconsJson.toString());
-
-
         return beaconsJson.toString();
         //return main.toString();
     }

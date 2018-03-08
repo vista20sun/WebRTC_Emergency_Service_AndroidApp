@@ -48,6 +48,7 @@ import org.slf4j.LoggerFactory;
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 
@@ -160,65 +161,50 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
         // 2. Collect info from iBeacons
-        IBeaconsCollector bc = new IBeaconsCollector(ChatActivity.this, mBluetoothAdapter);
+        IBeaconsCollector bc = new IBeaconsCollector(ChatActivity.this);
         bc.findIBeacons();
     }
-    public void scanFinished(List<IBeacon> list) {
-        collectedIBeacons = list;
+    public void scanFinished(Collection<IBeacon> list) {
         //logText.append("*FINISHED - iBeacons Scanned: "+ list.size() + "\n");
 
         // 3. Send HTTP request to Location Server
-        if(collectedIBeacons.size() > 0){
+        if(list.size() > 0){
             // 4. Create JSON object with the iBeacons
-            for (int i = 0; i < list.size(); i++) {
-                //for(IBeacon iBeacon : list){
-
-                /*logText.append("UUID: " + list.get(i).getUuid() + " - Major: " + list.get(i).getMajor()
-                        + " - Minor: " + list.get(i).getMinor() + " - RSSI: " + list.get(i).getRssi() + "\n");*/
-                if (i == 0) {
-                    //4.1 We first create the json object
-                    json = new Json(list.get(i).getUuid(), list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    try {
-                        json.createMyJsonIndoor();
-                        Log.i("CALL", "This is the 1st created JSON: " + json.readMyJson());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+            json = new Json();
+            for (IBeacon x:list){
+                try{
+                    json.updateMyJsonIndoor(x.getMajor(),x.getMinor(),x.getRssi());
+                }catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                else if(i==list.size()-1){
-                    //4.3 We add the last iBeacons to our json object and then we send it to the server
-                    try {
-                        json.updateMyJsonIndoor(list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    try {
-                        RequestQueue queue = Volley.newRequestQueue(this);
-                        String urlfinal = "https://api.iitrtclab.com/indoorLocation/getIndoorLocationCivicAddressJSON?test=true&json="+json.readMyJson();
+            }
+            try {
+                RequestQueue queue = Volley.newRequestQueue(this);
+                String urlfinal = "https://api.iitrtclab.com/indoorLocation/getIndoorLocationCivicAddressJSON?test=true&json="+json.readMyJson();
 
-                        Log.i("[NG911 HTTP Get val] ", urlfinal);
-                        // Request a string response from the provided URL.
-                        JsonObjectRequest jsObjRequest = new JsonObjectRequest
-                                (Request.Method.GET, urlfinal, null, new Response.Listener<JSONObject>() {
+                Log.i("[NG911 HTTP Get val] ", urlfinal);
+                // Request a string response from the provided URL.
+                JsonObjectRequest jsObjRequest = new JsonObjectRequest
+                        (Request.Method.GET, urlfinal, null, new Response.Listener<JSONObject>() {
 
-                                    @Override
-                                    public void onResponse(JSONObject response) {
-                                        Log.i("Response",response.toString());
-                                        try {
-                                            toSend.put("Room",response.getString("Type"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        try {
-                                            toSend.put("Floor",response.getString("Floor"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        try {
-                                            toSend.put("CivicAddress",response.getString("CivicAddress"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
+                            @Override
+                            public void onResponse(JSONObject response) {
+                                Log.i("Response",response.toString());
+                                try {
+                                    toSend.put("Room",response.getString("Type"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    toSend.put("Floor",response.getString("Floor"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try {
+                                    toSend.put("CivicAddress",response.getString("CivicAddress"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                                         /*try {
                                             toSend.put("y0",response.getString("y0"));
                                         } catch (JSONException e) {
@@ -230,35 +216,25 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                                             e.printStackTrace();
                                         }*/
 
-                                        mSocket.emit("caller", toSend );
-                                        Log.i("[NG911 HTTP Get val] ", toSend.toString());
+                                mSocket.emit("caller", toSend );
+                                Log.i("[NG911 HTTP Get val] ", toSend.toString());
 
-                                    }
-                                }, new Response.ErrorListener() {
+                            }
 
-                                    @Override
-                                    public void onErrorResponse(VolleyError error) {
-                                        // TODO Auto-generated method stub
-                                        Log.i("[NG911 HTTP Get val] ", error.toString());
+                        }, new Response.ErrorListener() {
 
-                                    }
-                                });
-                        // Add the request to the RequestQueue.
-                        queue.add(jsObjRequest);
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+                                // TODO Auto-generated method stub
+                                Log.i("[NG911 HTTP Get val] ", error.toString());
 
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
-                else{
-                    //4.2 We add all the iBeacons to our json object
-                    try {
-                        json.updateMyJsonIndoor(list.get(i).getMajor(), list.get(i).getMinor(), list.get(i).getRssi());
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                }
+                            }
+                        });
+                // Add the request to the RequestQueue.
+                queue.add(jsObjRequest);
 
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
             // TODO Send information to location server. SYNCHRONOUS METHOD
         }else{

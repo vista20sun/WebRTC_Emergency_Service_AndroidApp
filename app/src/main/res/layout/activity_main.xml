@@ -65,7 +65,6 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/telbutton2"
         android:enabled="true"
-        android:onClick="onClickJoin"
         android:text="@string/label_join"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"

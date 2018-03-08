@@ -1,9 +1,10 @@
 #include <jni.h>
 #include <android/log.h>
 #include <stdlib.h>
+#include <string.h>
 
-#include "../../../../../../libs/include/IAgoraRtcEngine.h"
-#include "../../../../../../libs/include/IAgoraMediaEngine.h"
+#include "./agora/IAgoraRtcEngine.h"
+#include "./agora/IAgoraMediaEngine.h"
 
 #include "video_preprocessing_plugin_jni.h"
 
