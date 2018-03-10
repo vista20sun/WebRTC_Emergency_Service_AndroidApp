@@ -118,8 +118,9 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     @Override
     protected void onStart() {
 //start handler as activity become visible
+    collectBeacon();
 
-        h.postDelayed(new Runnable() {
+        /*h.postDelayed(new Runnable() {
             public void run() {
 
                 //GPS information
@@ -147,7 +148,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                 h.postDelayed(runnable, delay);
 
             }
-        }, delay);
+        }, delay);*/
 
         super.onStart();
     }
@@ -163,12 +164,28 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         }
         // 2. Collect info from iBeacons
         IBeaconsCollector bc = new IBeaconsCollector(ChatActivity.this);
-        bc.findIBeacons();
+        bc.startBackGroundSearching(10);
     }
     public void scanFinished(Collection<IBeacon> list) {
         //logText.append("*FINISHED - iBeacons Scanned: "+ list.size() + "\n");
 
         // 3. Send HTTP request to Location Server
+        toSend = new JSONObject();
+        GPSTracker gps = new GPSTracker(getApplicationContext());
+        if(gps.canGetLocation()) {
+            double latitude = gps.getLatitude(); // returns latitude
+            double longitude = gps.getLongitude();
+
+            try {
+                toSend.put("sessionID", sessionID);
+                toSend.put("latitude", latitude);
+                toSend.put("longitude", longitude);
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
         if(list.size() > 0){
             // 4. Create JSON object with the iBeacons
             json = new Json();
@@ -239,12 +256,46 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             }
             // TODO Send information to location server. SYNCHRONOUS METHOD
         }else{
+            mork(toSend);
             mSocket.emit("caller", toSend );
-            Log.i("[NG911 HTTP Get val] ", toSend.toString());
+            Log.d("[NG911 HTTP Get val] ", toSend.toString());
         }
 
     }
-    
+    private String info[]={
+            "106 35.5461095024445 55.56611733580424",
+            "106 35.5461095024445 55.56611733580424",
+            "NA 28.0154945684641 55.15042845734629",
+            "NA 27.9692944185025 46.83665381426708",
+            "NA 27.9692944185025 46.83665381426708",
+            "NA 28.0154945684641 36.90631137147803",
+            "NA 18.4031304178198 26.67472095560893",
+            "NA 10.8725147523195 26.53615817900293",
+            "NA 5.05130317235829 30.78542074590654",
+            "NA 9.71742642128235 39.52880929883810",
+            "NA 7.73082244181368 45.16370127772156",
+            "NA 7.73082244181368 45.16370127772156",
+            "NA 7.68419160946586 53.30338212165177",
+            "NA 18.3102133904731 60.50865400324306",
+            "NA 28.0154945684641 55.15042845734629"};
+    private int timeMock = 0;
+    private void mork(JSONObject toSend){
+        String Building = "SB";
+        String Floor="1";
+        int id = (++timeMock)%info.length;
+        String infos[]=info[id].split(" ");
+        try {
+            toSend.put("Building",Building);
+            toSend.put("Floor",Floor);
+            toSend.put("Room",infos[0]);
+            toSend.put("x0",infos[1]);
+            toSend.put("y0",infos[2]);
+            toSend.put("mork",true);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

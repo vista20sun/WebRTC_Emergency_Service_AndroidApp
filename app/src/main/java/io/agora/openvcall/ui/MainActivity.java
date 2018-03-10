@@ -219,7 +219,7 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
             // Instantiate the RequestQueue.
             RequestQueue queue = Volley.newRequestQueue(this);
             //logText.setText(""+latitude);
-            collectBeacon();
+            //collectBeacon();
             String url ="https://www.911webrtc.com/api/android/getChannelGPS?latitude="+latitude+"&longitude="+longitude;
 
             JsonObjectRequest jsObjRequest = new JsonObjectRequest
