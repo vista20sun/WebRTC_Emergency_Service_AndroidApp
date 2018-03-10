@@ -33,6 +33,9 @@ public class IBeaconsCollector  implements BeaconConsumer {
     private final static String debugTag="BeaconScanner:";
     private IBeaconCallback callback;
     private static final long SCAN_PERIOD = 8000;                                                                                       //searching time
+    private boolean background;
+    private int backgroundCounter,backgroundTimes;
+
 
     public IBeaconsCollector(Context context){
         this.context = context;
@@ -41,6 +44,7 @@ public class IBeaconsCollector  implements BeaconConsumer {
         beaconMap = new HashMap<>();
         handler=new Handler();
         callback = (IBeaconCallback)context;
+        background =false;
     }
     public void onBeaconServiceConnect() {                                                                                              //callback function, called when bind this object to a searching service
         beaconManager.removeAllRangeNotifiers();                                                                                        //remove all exists searching task before start new searching
@@ -82,8 +86,31 @@ public class IBeaconsCollector  implements BeaconConsumer {
             }
         },SCAN_PERIOD);
         beaconManager.bind(IBeaconsCollector.this);                                                                      //start searching by bind this scanner to service
+        background = false;
     }
 
+    public void startBackGroundSearching(int time){
+        background = true;
+        backgroundCounter = 0;
+        backgroundTimes=time;
+        beaconManager.bind(IBeaconsCollector.this);
+    }
+
+    public void stopBackgroundSearching(){
+        background = false;
+        beaconManager.unbind(IBeaconsCollector.this);
+    }
+
+    private synchronized void backgroundReturn(int uuidNums){
+        if(!background)
+            return;
+        backgroundCounter = (backgroundCounter+1)%(uuidNums*backgroundTimes);
+        if(backgroundCounter == 0) {
+            callback.scanFinished(beaconMap.values());
+            beaconMap.clear();
+        }
+
+    }
 
     @Override
     public Context getApplicationContext() {

@@ -145,6 +145,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                 runnable=this;
 
                 h.postDelayed(runnable, delay);
+
             }
         }, delay);
 
@@ -243,6 +244,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         }
 
     }
+    
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         return false;

@@ -41,23 +41,15 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="450">
-      <file leaf-file-name="IBeaconCallback.java" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconCallback.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="243">
-              <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="IBeaconsCollector.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1088">
-              <caret line="94" column="219" lean-forward="false" selection-start-line="94" selection-start-column="219" selection-end-line="94" selection-end-column="219" />
+            <state relative-caret-position="497">
+              <caret line="109" column="30" lean-forward="false" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
               <folding>
                 <element signature="imports" expanded="true" />
+                <element signature="e#2541#3934#0" expanded="true" />
+                <element signature="e#3933#3934#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -83,11 +75,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ChatActivity.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ChatActivity.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/ChatActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1412">
-              <caret line="220" column="0" lean-forward="false" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
+            <state relative-caret-position="98">
+              <caret line="246" column="4" lean-forward="false" selection-start-line="246" selection-start-column="4" selection-end-line="246" selection-end-column="4" />
               <folding />
             </state>
           </provider>
@@ -98,7 +90,13 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="378">
               <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="30" />
-              <folding />
+              <folding>
+                <element signature="e#0#2649#0" expanded="false" />
+                <element signature="e#1713#1714#0" expanded="false" />
+                <element signature="e#1758#1759#0" expanded="false" />
+                <element signature="e#2312#2313#0" expanded="false" />
+                <element signature="e#2348#2349#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -106,19 +104,38 @@
       <file leaf-file-name="build.gradle" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/build.gradle">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1736">
-              <caret line="72" column="1" lean-forward="false" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
+            <state relative-caret-position="1157">
+              <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="IBeacon.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="IBeacon.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeacon.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1196">
+            <state relative-caret-position="1566">
               <caret line="76" column="42" lean-forward="false" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
-              <folding />
+              <folding>
+                <element signature="e#892#893#0" expanded="false" />
+                <element signature="e#925#926#0" expanded="false" />
+                <element signature="e#957#958#0" expanded="false" />
+                <element signature="e#1003#1004#0" expanded="false" />
+                <element signature="e#1042#1043#0" expanded="false" />
+                <element signature="e#1076#1077#0" expanded="false" />
+                <element signature="e#1108#1109#0" expanded="false" />
+                <element signature="e#1154#1155#0" expanded="false" />
+                <element signature="e#1193#1194#0" expanded="false" />
+                <element signature="e#1227#1228#0" expanded="false" />
+                <element signature="e#1258#1259#0" expanded="false" />
+                <element signature="e#1285#1286#0" expanded="false" />
+                <element signature="e#1325#1326#0" expanded="false" />
+                <element signature="e#1357#1358#0" expanded="false" />
+                <element signature="e#1383#1384#0" expanded="false" />
+                <element signature="e#1425#1426#0" expanded="false" />
+                <element signature="e#1477#1478#0" expanded="false" />
+                <element signature="e#1530#1531#0" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -126,8 +143,18 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="729">
-              <caret line="224" column="42" lean-forward="false" selection-start-line="224" selection-start-column="30" selection-end-line="224" selection-end-column="42" />
+            <state relative-caret-position="-868">
+              <caret line="252" column="35" lean-forward="false" selection-start-line="252" selection-start-column="28" selection-end-line="252" selection-end-column="35" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RequestQueue.java" pinned="false" current-in-tab="false">
+        <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.volley/volley/1.0.0/c79696d64f9520675054e27b77f490c17d8b4b9e/volley-1.0.0-sources.jar!/com/android/volley/RequestQueue.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="27">
+              <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -136,9 +163,11 @@
       <file leaf-file-name="Json.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/Json.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8">
+            <state relative-caret-position="459">
               <caret line="22" column="46" lean-forward="false" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-              <folding />
+              <folding>
+                <element signature="imports" expanded="false" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -166,17 +195,20 @@
       <find>Uuid</find>
       <find>jsonOb</find>
       <find>findChannelWithGPS</find>
-      <find>collectBeacon</find>
       <find>startA</find>
       <find>room</find>
       <find>doIn</find>
       <find>forwardToRoom</find>
-      <find>BeaconScanner</find>
       <find>queue</find>
       <find>scanFinished</find>
-      <find>findIBeacons</find>
       <find>bc.f</find>
       <find>RequestQueue</find>
+      <find>BeaconScanner</find>
+      <find>debugTag</find>
+      <find>JsonObjectRequest</find>
+      <find>collectBeacon</find>
+      <find>findIBeacons</find>
+      <find>mSocket</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -1968,11 +2000,11 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/build.gradle" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconCallback.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/ChatActivity.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/Json.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeacon.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/ChatActivity.java" />
       </list>
     </option>
   </component>
@@ -1983,7 +2015,7 @@
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="AndroidView" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -1996,7 +2028,50 @@
       <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes />
+    <panes>
+      <pane id="ProjectPane" />
+      <pane id="AndroidView">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebRTC_Emergency_Service_AndroidApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="Gradle Scripts" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidBuildScriptsGroupNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebRTC_Emergency_Service_AndroidApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WebRTC_Emergency_Service_AndroidApp" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.android.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="Scratches" />
+      <pane id="PackagesPane" />
+    </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -2097,7 +2172,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520531855765" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520719565630" />
       </method>
     </configuration>
     <configuration default="true" type="AndroidTestRunConfigurationType" factoryName="Android Instrumented Tests">
@@ -2145,7 +2220,7 @@
       </Profilers>
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520531855766" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520719565632" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -2328,7 +2403,7 @@
       <option name="ACTIVITY_CLASS" value="" />
       <method>
         <option name="Android.Gradle.BeforeRunTask" enabled="true" />
-        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520531855766" />
+        <option name="com.android.instantApps.provision.BeforeRunTask" enabled="true" clearCache="false" clearProvisionedDevices="false" myTimestamp="1520719565637" />
       </method>
     </configuration>
     <list size="1">
@@ -2387,29 +2462,29 @@
     <frame x="-10" y="0" width="2756" height="1774" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.3298969" sideWeight="0.49850076" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Android Profiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3298969" sideWeight="0.49850076" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967743" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32903227" sideWeight="0.43815592" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32899868" sideWeight="0.43815592" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283871" sideWeight="0.20277362" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32967743" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32970026" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3283871" sideWeight="0.79722637" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Logcat" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32834852" sideWeight="0.79722637" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Captures" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.12634823" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.1264066" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Device File Explorer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39935485" sideWeight="0.49250376" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.40182054" sideWeight="0.49250376" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -2501,18 +2576,6 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java</url>
-          <line>229</line>
-          <properties />
-          <option name="timeStamp" value="30" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java</url>
-          <line>80</line>
-          <properties />
-          <option name="timeStamp" value="32" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java</url>
           <line>299</line>
           <properties />
           <option name="timeStamp" value="34" />
@@ -2525,12 +2588,18 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java</url>
+          <line>229</line>
+          <properties />
+          <option name="timeStamp" value="42" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java</url>
           <line>222</line>
           <properties />
-          <option name="timeStamp" value="37" />
+          <option name="timeStamp" value="47" />
         </line-breakpoint>
       </breakpoints>
-      <option name="time" value="39" />
+      <option name="time" value="48" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -2719,14 +2788,14 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/AndroidManifest.xml">
+      <provider editor-type-id="android-manifest">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="594">
           <caret line="22" column="36" lean-forward="false" selection-start-line="22" selection-start-column="36" selection-end-line="22" selection-end-column="36" />
           <folding />
         </state>
-      </provider>
-      <provider editor-type-id="android-manifest">
-        <state />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/AGApplication.java">
@@ -2747,13 +2816,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1890">
           <caret line="81" column="16" lean-forward="false" selection-start-line="81" selection-start-column="16" selection-end-line="81" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.volley/volley/1.0.0/c79696d64f9520675054e27b77f490c17d8b4b9e/volley-1.0.0-sources.jar!/com/android/volley/RequestQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="334">
-          <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
         </state>
       </provider>
     </entry>
@@ -2834,7 +2896,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="243">
           <caret line="11" column="31" lean-forward="false" selection-start-line="11" selection-start-column="31" selection-end-line="11" selection-end-column="31" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2854,11 +2915,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/Json.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="729">
-          <caret line="224" column="42" lean-forward="false" selection-start-line="224" selection-start-column="30" selection-end-line="224" selection-end-column="42" />
-          <folding />
+        <state relative-caret-position="459">
+          <caret line="22" column="46" lean-forward="false" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
+          <folding>
+            <element signature="imports" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeacon.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1566">
+          <caret line="76" column="42" lean-forward="false" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
+          <folding>
+            <element signature="e#892#893#0" expanded="false" />
+            <element signature="e#925#926#0" expanded="false" />
+            <element signature="e#957#958#0" expanded="false" />
+            <element signature="e#1003#1004#0" expanded="false" />
+            <element signature="e#1042#1043#0" expanded="false" />
+            <element signature="e#1076#1077#0" expanded="false" />
+            <element signature="e#1108#1109#0" expanded="false" />
+            <element signature="e#1154#1155#0" expanded="false" />
+            <element signature="e#1193#1194#0" expanded="false" />
+            <element signature="e#1227#1228#0" expanded="false" />
+            <element signature="e#1258#1259#0" expanded="false" />
+            <element signature="e#1285#1286#0" expanded="false" />
+            <element signature="e#1325#1326#0" expanded="false" />
+            <element signature="e#1357#1358#0" expanded="false" />
+            <element signature="e#1383#1384#0" expanded="false" />
+            <element signature="e#1425#1426#0" expanded="false" />
+            <element signature="e#1477#1478#0" expanded="false" />
+            <element signature="e#1530#1531#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -2866,48 +2956,56 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="378">
           <caret line="28" column="30" lean-forward="false" selection-start-line="28" selection-start-column="20" selection-end-line="28" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/Json.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="8">
-          <caret line="22" column="46" lean-forward="false" selection-start-line="22" selection-start-column="46" selection-end-line="22" selection-end-column="46" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1088">
-          <caret line="94" column="219" lean-forward="false" selection-start-line="94" selection-start-column="219" selection-end-line="94" selection-end-column="219" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#0#2649#0" expanded="false" />
+            <element signature="e#1713#1714#0" expanded="false" />
+            <element signature="e#1758#1759#0" expanded="false" />
+            <element signature="e#2312#2313#0" expanded="false" />
+            <element signature="e#2348#2349#0" expanded="false" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/build.gradle">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1736">
-          <caret line="72" column="1" lean-forward="false" selection-start-line="72" selection-start-column="1" selection-end-line="72" selection-end-column="1" />
+        <state relative-caret-position="1157">
+          <caret line="48" column="0" lean-forward="false" selection-start-line="48" selection-start-column="0" selection-end-line="48" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeaconsCollector.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="497">
+          <caret line="109" column="30" lean-forward="false" selection-start-line="109" selection-start-column="30" selection-end-line="109" selection-end-column="30" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2541#3934#0" expanded="true" />
+            <element signature="e#3933#3934#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.android.volley/volley/1.0.0/c79696d64f9520675054e27b77f490c17d8b4b9e/volley-1.0.0-sources.jar!/com/android/volley/RequestQueue.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="27">
+          <caret line="39" column="13" lean-forward="false" selection-start-line="39" selection-start-column="13" selection-end-line="39" selection-end-column="13" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/MainActivity.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-868">
+          <caret line="252" column="35" lean-forward="false" selection-start-line="252" selection-start-column="28" selection-end-line="252" selection-end-column="35" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/ui/ChatActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1412">
-          <caret line="220" column="0" lean-forward="false" selection-start-line="220" selection-start-column="0" selection-end-line="220" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/io/agora/openvcall/location/Bluetooth/IBeacon.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1196">
-          <caret line="76" column="42" lean-forward="false" selection-start-line="76" selection-start-column="42" selection-end-line="76" selection-end-column="42" />
+        <state relative-caret-position="98">
+          <caret line="246" column="4" lean-forward="false" selection-start-line="246" selection-start-column="4" selection-end-line="246" selection-end-column="4" />
           <folding />
         </state>
       </provider>

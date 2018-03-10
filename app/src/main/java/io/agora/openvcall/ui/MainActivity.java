@@ -299,7 +299,7 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
             }
             RequestQueue queue = Volley.newRequestQueue(this);
             try {
-                String urlfinal = "http://smith-system-f.herokuapp.com/indoorLocation/getIndoorLocation?test=true&json="+json.readMyJson();
+                String urlfinal = "https://api.iitrtclab.com/indoorLocation/getIndoorLocationCivicAddressJSON?test=true&json="+json.readMyJson();
                 Log.i("[NG911 HTTP Get val] ", urlfinal);
                 StringRequest stringRequest = new StringRequest(Request.Method.GET, urlfinal,
                         new Response.Listener<String>() {
