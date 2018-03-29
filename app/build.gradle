@@ -25,7 +25,8 @@ android {
         }
 
         ndk {
-            abiFilters "armeabi-v7a", "x86" // DO NOT MODIFY THIS LINE, IT'S UPDATED BY BUILD MACHINE AUTOMATICALLY.
+            abiFilters "armeabi-v7a", "x86"
+            // DO NOT MODIFY THIS LINE, IT'S UPDATED BY BUILD MACHINE AUTOMATICALLY.
         }
     }
 
@@ -43,7 +44,7 @@ android {
 
     sourceSets {
         main {
-            jniLibs.srcDirs = ['../../../libs','src/main/cpp/agora','src/main/libs']
+            jniLibs.srcDirs = ['../../../libs', 'src/main/cpp/agora', 'src/main/libs']
         }
     }
 
@@ -67,6 +68,7 @@ dependencies {
         // workaround issue #73
         exclude group: 'com.google.android', module: 'android'
     }
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
     androidTestCompile 'com.jayway.android.robotium:robotium-solo:5.6.3'
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
     implementation files('libs/agora-rtc-sdk.jar')

@@ -1,12 +1,18 @@
 package io.agora.openvcall.ui;
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -23,6 +29,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
@@ -52,6 +59,7 @@ import io.agora.openvcall.location.Bluetooth.*;
 
 public class MainActivity extends BaseActivity implements IBeaconCallback{
     private static final String TAG = MainActivity.class.getSimpleName();
+    private static int REQUEST_LOCATION = 0x114514;
     private Socket mSocket;
     {
         try {

@@ -164,7 +164,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         }
         // 2. Collect info from iBeacons
         IBeaconsCollector bc = new IBeaconsCollector(ChatActivity.this);
-        bc.startBackGroundSearching(10);
+        bc.startBackGroundSearching(5);
     }
     public void scanFinished(Collection<IBeacon> list) {
         //logText.append("*FINISHED - iBeacons Scanned: "+ list.size() + "\n");
@@ -200,7 +200,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                 RequestQueue queue = Volley.newRequestQueue(this);
                 String urlfinal = "https://api.iitrtclab.com/indoorLocation/getIndoorLocationCivicAddressJSON?test=true&json="+json.readMyJson();
 
-                Log.i("[NG911 HTTP Get val] ", urlfinal);
+                Log.d("[NG911 HTTP Get val] ", urlfinal);
                 // Request a string response from the provided URL.
                 JsonObjectRequest jsObjRequest = new JsonObjectRequest
                         (Request.Method.GET, urlfinal, null, new Response.Listener<JSONObject>() {
@@ -223,19 +223,9 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                        /*try {
-                                            toSend.put("y0",response.getString("y0"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }
-                                        try {
-                                            toSend.put("x0",response.getString("x0"));
-                                        } catch (JSONException e) {
-                                            e.printStackTrace();
-                                        }*/
 
                                 mSocket.emit("caller", toSend );
-                                Log.i("[NG911 HTTP Get val] ", toSend.toString());
+                                Log.d("[NG911 HTTP Get val] ", toSend.toString());
 
                             }
 
@@ -244,7 +234,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                             @Override
                             public void onErrorResponse(VolleyError error) {
                                 // TODO Auto-generated method stub
-                                Log.i("[NG911 HTTP Get val] ", error.toString());
+                                Log.d("[NG911 HTTP Get val] ", error.toString());
 
                             }
                         });
@@ -263,7 +253,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
 
     }
     private String info[]={
-            "106 35.5461095024445 55.56611733580424",
+            /*"106 35.5461095024445 55.56611733580424",
             "106 35.5461095024445 55.56611733580424",
             "NA 28.0154945684641 55.15042845734629",
             "NA 27.9692944185025 46.83665381426708",
@@ -277,7 +267,17 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             "NA 7.73082244181368 45.16370127772156",
             "NA 7.68419160946586 53.30338212165177",
             "NA 18.3102133904731 60.50865400324306",
-            "NA 28.0154945684641 55.15042845734629"};
+            "NA 28.0154945684641 55.15042845734629",*/
+            "106 28.0195126 50.88391361",
+            "107 28.0195126 42.80893591",
+            "108 28.0195126 28.22523788",
+            "111 22.79965764 19.79185287",
+            "113 11.94049434 19.79185287",
+            "113 6.65061426 25.86174879",
+            "113 5.57867978 32.47799542",
+            "102 5.9975816 42.60105594",
+            "103 2.94553596 51.64015332"
+            };
     private int timeMock = 0;
     private void mork(JSONObject toSend){
         String Building = "SB";
