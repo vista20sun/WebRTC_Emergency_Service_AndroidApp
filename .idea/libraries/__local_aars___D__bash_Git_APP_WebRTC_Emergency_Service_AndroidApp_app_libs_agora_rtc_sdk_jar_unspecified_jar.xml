@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="__local_aars__:D.\bash\Git\APP\WebRTC_Emergency_Service_AndroidApp\app\libs\agora-rtc-sdk.jar:unspecified@jar">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/app/libs/agora-rtc-sdk.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

@@ -80,4 +80,12 @@
         android:textStyle="italic"
         android:text="Press the button to connect to Public Safety" />
 
+    <Button
+        android:id="@+id/button_mock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="mock" />
+
 </RelativeLayout>
