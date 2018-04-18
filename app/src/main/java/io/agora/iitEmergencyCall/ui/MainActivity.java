@@ -280,9 +280,12 @@ public class MainActivity extends BaseActivity implements IBeaconCallback{
                         @Override
                         public void onErrorResponse(VolleyError error) {
                             // TODO Auto-generated method stub
-
+                            Log.d("[request error]","no response" );
+                            dialog.hide();
+                            Toast.makeText(MainActivity.this, "all channel is busy", Toast.LENGTH_SHORT).show();
                         }
                     });
+            jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(1000,3,1f));
             // Add the request to the RequestQueue.
             queue.add(jsObjRequest);
 

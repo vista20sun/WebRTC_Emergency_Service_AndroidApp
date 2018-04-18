@@ -34,10 +34,17 @@ function removeAllCircles() {
   d3.selectAll('circle').remove();
 }
 
-function changeSVG() {
-  d3.xml('svg/SB-02.svg', function (xml) {
+function changeSVG(name,x,y) {
+  d3.xml(name, function (xml) {
     $('body').empty();
     $('body').append(xml.documentElement);
+    d3.select('body').style("display","flex");
+    d3.select('body').style("justify-content","center");
+    d3.select('svg').style('height', '100%');
+    d3.select('svg').attr('width', '90vw');
+    d3.select('svg').attr('height', '90vh');
+    removeAllCircles()
+    setBeacon(x,y);
   });
 }
 

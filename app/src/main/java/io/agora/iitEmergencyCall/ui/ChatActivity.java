@@ -38,6 +38,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -99,6 +100,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     private volatile boolean mAudioMuted = false;
 
     private String buildingNumber;
+    private int floor;
     private boolean mockMode;
 
     private static final int REQUEST_ENABLE_BT = 1;
@@ -108,7 +110,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     private BluetoothAdapter mBluetoothAdapter;
 
 
-    private JSONObject toSend = new JSONObject();
+    private RequestQueue queue;
     private volatile int mAudioRouting = -1; // Default
     Handler h = new Handler();
     int delay = 10000; //15 seconds
@@ -129,6 +131,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         btManager = (BluetoothManager)getSystemService(Context.BLUETOOTH_SERVICE);;
         mBluetoothAdapter = btManager.getAdapter();
         webView = null;
+        queue=Volley.newRequestQueue(this);
     }
     @Override
     protected void onStart() {
@@ -192,7 +195,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         //logText.append("*FINISHED - iBeacons Scanned: "+ list.size() + "\n");
 
         // 3. Send HTTP request to Location Server
-        toSend = new JSONObject();
+        final JSONObject toSend = new JSONObject();
         GPSTracker gps = new GPSTracker(getApplicationContext());
         if(gps.canGetLocation()) {
             double latitude = gps.getLatitude(); // returns latitude
@@ -208,9 +211,9 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             }
 
         }
-        list.add(new IBeacon(-91,1000,540,"uuid"));
-        list.add(new IBeacon(-92,1000,518,"uuid"));
-        list.add(new IBeacon(-55,1000,518,"uuid"));
+        //list.add(new IBeacon(-91,1000,540,"uuid"));
+        //list.add(new IBeacon(-92,1000,518,"uuid"));
+        //list.add(new IBeacon(-55,1000,518,"uuid"));
         if(list.size() > 0 && !mockMode){
             // 4. Create JSON object with the iBeacons
             json = new Json();
@@ -222,12 +225,10 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                 }
             }
             try {
-                RequestQueue queue = Volley.newRequestQueue(this);
                 //String urlfinal = "https://api.iitrtclab.com/indoorLocation/getIndoorLocationCivicAddressJSON?test=true&json="+json.readMyJson();
                 //String urlfinal ="https://api.iitrtclab.com/map/indoorlocation?%s&algorithim=1" ;
                 String urlfinal = getJSONURL(json);
-
-                Log.d("[NG911 HTTP Get val] ", urlfinal);
+                Log.d("[BOSSA] - SEND", urlfinal);
                 // Request a string response from the provided URL.
                 JsonObjectRequest jsObjRequest = new JsonObjectRequest
                         (Request.Method.GET, urlfinal, null, new Response.Listener<JSONObject>() {
@@ -235,58 +236,52 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.i("Response",response.toString());
-                                String Room,Building,x0,y0,Floor;
-                                try{
-                                    Room = response.getString("room");
-                                } catch (JSONException e) {
-                                    Room = "NA";
-                                    e.printStackTrace();
-                                }
+                                String Building;
+                                int floor_temp=floor;
                                 try{
                                     Building = response.getString("building");
-                                } catch (JSONException e) {
-                                    Building = "NA";
-                                    e.printStackTrace();
-                                }
-                                try{
-                                    Floor = response.getString("floor");
-                                } catch (JSONException e) {
-                                    Floor = "NA";
-                                    e.printStackTrace();
-                                }
-                                try{
-                                    x0 = response.getString("x");
-                                } catch (JSONException e) {
-                                    x0 = "NA";
-                                    e.printStackTrace();
-                                }
-                                try{
-                                    y0 = response.getString("y");
-                                } catch (JSONException e) {
-                                    y0 = "NA";
-                                    e.printStackTrace();
-                                }
-                                try {
                                     toSend.put("building_id",Building);
-                                    toSend.put("Floor",Floor);
-                                    toSend.put("Room",Room);
-                                    toSend.put("x0",x0);
-                                    toSend.put("y0",y0);
-                                    toSend.put("mork",false);
+                                } catch (JSONException e) {
+                                    Building = null;
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    toSend.put("Room",response.getString("room"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    toSend.put("Floor",response.getString("floor"));
+                                    floor_temp = Integer.parseInt(response.getString("floor"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    toSend.put("x0",response.getString("x"));
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                try{
+                                    toSend.put("y0",response.getString("y"));
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 mSocket.emit("caller", toSend );
-                                if(buildingNumber==null||!buildingNumber.equals(Building)){
-                                    buildingNumber=Building;
-                                    //reload map;
-                                }
+
                                 try {
-                                    updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")));
+                                    if(buildingNumber==null||!buildingNumber.equals(Building)||floor_temp!=floor){
+                                        buildingNumber=Building;
+                                        floor=floor_temp;
+                                        updateMap(Float.parseFloat(toSend.getString("x0")),
+                                                Float.parseFloat(toSend.getString("y0")),
+                                                String.format("svg/%s-%02d.svg",buildingNumber,floor));
+                                    }
+                                    else
+                                        updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")),null);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
-                                Log.d("[NG911 HTTP Get val] ", toSend.toString());
+                                Log.d("[BOSSA] - RECEIVE", toSend.toString());
 
                             }
 
@@ -300,6 +295,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                             }
                         });
                 // Add the request to the RequestQueue.
+                jsObjRequest.setRetryPolicy(new DefaultRetryPolicy(1500,1,1.0f));
                 queue.add(jsObjRequest);
 
             } catch (JSONException e) {
@@ -310,7 +306,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             mork(toSend);
             mSocket.emit("caller", toSend );
             try {
-                updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")));
+                updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")),null);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -321,21 +317,6 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
 
     }
     private String info[]={
-            /*"106 35.5461095024445 55.56611733580424",
-            "106 35.5461095024445 55.56611733580424",
-            "NA 28.0154945684641 55.15042845734629",
-            "NA 27.9692944185025 46.83665381426708",
-            "NA 27.9692944185025 46.83665381426708",
-            "NA 28.0154945684641 36.90631137147803",
-            "NA 18.4031304178198 26.67472095560893",
-            "NA 10.8725147523195 26.53615817900293",
-            "NA 5.05130317235829 30.78542074590654",
-            "NA 9.71742642128235 39.52880929883810",
-            "NA 7.73082244181368 45.16370127772156",
-            "NA 7.73082244181368 45.16370127772156",
-            "NA 7.68419160946586 53.30338212165177",
-            "NA 18.3102133904731 60.50865400324306",
-            "NA 28.0154945684641 55.15042845734629",*/
             "106 28.0195126 50.88391361",
             "107 28.0195126 42.80893591",
             "108 28.0195126 28.22523788",
@@ -348,17 +329,17 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     };
     private int timeMock = 0;
     private void mork(JSONObject toSend){
-        String Building = "SB";
+        String Building = "31";//SB
         String Floor="1";
         int id = (++timeMock)%info.length;
         String infos[]=info[id].split(" ");
         try {
-            toSend.put("Building",Building);
+            toSend.put("building_id",Building);
             toSend.put("Floor",Floor);
             toSend.put("Room",infos[0]);
             toSend.put("x0",infos[1]);
             toSend.put("y0",infos[2]);
-            toSend.put("mork",true);
+            toSend.put("mock",true);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -370,7 +351,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     }
 
     private void showMapDialog(){
-        if(buildingNumber==null){
+        if(buildingNumber==null&&!mockMode){
             Toast.makeText(this, "cannot get indoor location", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -394,23 +375,36 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         lp.height=WindowManager.LayoutParams.MATCH_PARENT;
         window.setAttributes(lp);
         webView.getSettings().setJavaScriptEnabled(true);
+        webView.getSettings().setAllowUniversalAccessFromFileURLs(true);
+        webView.getSettings().setAllowFileAccessFromFileURLs(true);
+        webView.getSettings().setAllowContentAccess(true);
+        webView.getSettings().setAppCacheEnabled(true);
+        webView.getSettings().setAllowFileAccess(true);
         //webView.loadUrl("https://www.google.com/maps");
         webView.loadUrl("file:///android_asset/map/index.html");
-
     }
 
-    private void updateMap(final float x,final  float y){
+    private void updateMap(final float x,final  float y,final String map){
         h.post(new Runnable() {
             @Override
             public void run() {
                 if(webView==null)
                     return;
-                webView.evaluateJavascript(String.format("removeAllCircles();setBeacon(%f,%f)", x, y), new ValueCallback<String>() {
-                    @Override
-                    public void onReceiveValue(String value) {
-                        Log.d("map",value);
-                    }
-                });
+                if(map != null){
+                    webView.evaluateJavascript(String.format("changeSVG('%s',%f,%f);",map,x,y), new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            Log.d("map-drawing", value);
+                        }
+                    });
+                }else {
+                    webView.evaluateJavascript(String.format("removeAllCircles();setBeacon(%f,%f)", x, y), new ValueCallback<String>() {
+                        @Override
+                        public void onReceiveValue(String value) {
+                            Log.d("map", value);
+                        }
+                    });
+                }
             }
         });
     }
@@ -1092,6 +1086,14 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             iv.setColorFilter(ContextCompat.getColor(this,R.color.agora_blue), PorterDuff.Mode.MULTIPLY);
         } else {
             iv.clearColorFilter();
+        }
+    }
+
+    public String getBuildingName(int id){
+        switch (id){
+            case  31:   return "SB";
+            case 4:     return "AM";
+            default:    return null;
         }
     }
 }
