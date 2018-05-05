@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.PorterDuff;
 import android.media.AudioManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
@@ -55,6 +56,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -86,6 +88,8 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
 
     private final static Logger log = LoggerFactory.getLogger(ChatActivity.class);
 
+    final  static String request ="http://rtcfacilities.herokuapp.com/svg/%s-%02d.svg";//"svg/%s-%02d.svg";
+
     private GridVideoViewContainer mGridVideoViewContainer;
 
     private RelativeLayout mSmallVideoViewDock;
@@ -99,7 +103,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
 
     private volatile boolean mAudioMuted = false;
 
-    private String buildingNumber;
+    private int buildingNumber; //used to be a string identifier like "SB" or "AM", but replace with the Building ID;
     private int floor;
     private boolean mockMode;
 
@@ -236,13 +240,13 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                             @Override
                             public void onResponse(JSONObject response) {
                                 Log.i("Response",response.toString());
-                                String Building;
+                                int Building=buildingNumber;
                                 int floor_temp=floor;
                                 try{
-                                    Building = response.getString("building");
+                                    Building = Integer.parseInt(response.getString("building"));
                                     toSend.put("building_id",Building);
                                 } catch (JSONException e) {
-                                    Building = null;
+                                    Building = -1;
                                     e.printStackTrace();
                                 }
                                 try{
@@ -269,12 +273,12 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
                                 mSocket.emit("caller", toSend );
 
                                 try {
-                                    if(buildingNumber==null||!buildingNumber.equals(Building)||floor_temp!=floor){
+                                    if(buildingNumber==-1||buildingNumber!=Building||floor_temp!=floor){
                                         buildingNumber=Building;
                                         floor=floor_temp;
                                         updateMap(Float.parseFloat(toSend.getString("x0")),
                                                 Float.parseFloat(toSend.getString("y0")),
-                                                String.format("svg/%s-%02d.svg",buildingNumber,floor));
+                                                String.format(request,buildingNumber,floor));
                                     }
                                     else
                                         updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")),null);
@@ -306,36 +310,37 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
             mork(toSend);
             mSocket.emit("caller", toSend );
             try {
-                updateMap(Float.parseFloat(toSend.getString("x0")),Float.parseFloat(toSend.getString("y0")),null);
+                updateMap(Float.parseFloat(toSend.getString("x0")),
+                        Float.parseFloat(toSend.getString("y0")),
+                        String.format(request,"SB",Integer.parseInt(toSend.getString("Floor"))));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             Log.d("[NG911 HTTP Get val] ", toSend.toString());
         }else{
-            buildingNumber = null;
+            buildingNumber = -1;
         }
 
     }
     private String info[]={
-            "106 28.0195126 50.88391361",
-            "107 28.0195126 42.80893591",
-            "108 28.0195126 28.22523788",
-            "111 22.79965764 19.79185287",
-            "113 11.94049434 19.79185287",
-            "113 6.65061426 25.86174879",
-            "113 5.57867978 32.47799542",
-            "102 5.9975816 42.60105594",
-            "103 2.94553596 51.64015332"
+            "106 28.0195126 50.88391361 1",
+            "107 28.0195126 42.80893591 1",
+            "108 28.0195126 28.22523788 1",
+            "111 22.79965764 19.79185287 1",
+            "113 11.94049434 19.79185287 2",
+            "113 6.65061426 25.86174879 2",
+            "113 5.57867978 32.47799542 2",
+            "102 5.9975816 42.60105594 2",
+            "103 2.94553596 51.64015332 2"
     };
     private int timeMock = 0;
     private void mork(JSONObject toSend){
         String Building = "31";//SB
-        String Floor="1";
         int id = (++timeMock)%info.length;
         String infos[]=info[id].split(" ");
         try {
             toSend.put("building_id",Building);
-            toSend.put("Floor",Floor);
+            toSend.put("Floor",infos[3]);
             toSend.put("Room",infos[0]);
             toSend.put("x0",infos[1]);
             toSend.put("y0",infos[2]);
@@ -351,7 +356,7 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
     }
 
     private void showMapDialog(){
-        if(buildingNumber==null&&!mockMode){
+        if(buildingNumber==-1&&!mockMode){
             Toast.makeText(this, "cannot get indoor location", Toast.LENGTH_SHORT).show();
             return;
         }
@@ -381,7 +386,14 @@ public class ChatActivity extends BaseActivity implements AGEventHandler, IBeaco
         webView.getSettings().setAppCacheEnabled(true);
         webView.getSettings().setAllowFileAccess(true);
         //webView.loadUrl("https://www.google.com/maps");
+
         webView.loadUrl("file:///android_asset/map/index.html");
+        webView.evaluateJavascript(String.format("changeSVG('%s');",String.format(request,buildingNumber,floor)), new ValueCallback<String>() {
+            @Override
+            public void onReceiveValue(String value) {
+                Log.d("map-drawing", value);
+            }
+        });
     }
 
     private void updateMap(final float x,final  float y,final String map){
