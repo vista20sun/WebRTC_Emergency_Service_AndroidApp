@@ -65,7 +65,6 @@
         android:layout_gravity="center_horizontal"
         android:background="@drawable/telbutton2"
         android:enabled="true"
-        android:onClick="onClickJoin"
         android:text="@string/label_join"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
@@ -80,5 +79,13 @@
         android:layout_marginBottom="23dp"
         android:textStyle="italic"
         android:text="Press the button to connect to Public Safety" />
+
+    <Button
+        android:id="@+id/button_mock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:text="mock" />
 
 </RelativeLayout>
